@@ -1,7 +1,12 @@
 ---
 title: "Marc Presentación"
-subtitle: "⚔<br/>with xa"
+subtitle: "Data Analyst Day..."
 author: "Marc25"
+params:
+  data ="aa"
+  data_train="aa"
+  g1="aaa"
+  g2="aaa"
 institute: "cestudios.alonso"
 date: "2021/05/02 (updated: `r Sys.Date()`)"
 output:
@@ -37,32 +42,22 @@ class: inverse, center, middle
 
 ---
 
-# Hello World
-
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
-
-```{r eval=FALSE, tidy=FALSE}
-# remotes::install_github("yihui/xaringan")
-```
+# Good Morning Data 
+I have a problem in my bussiness ...
 
 --
 
 
 --
 
-
-
-Limitations:
-
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
-
-1. There should not be spaces after the opening `$` or before the closing `$`.
-
-1. Math does not work on the title slide (see [#61](https://github.com/yihui/xaringan/issues/61) for a workaround).
-
+# Example 01 : Loans predict default (Yes o No)
 ---
 
-# R Code
+# Data Source 
+
+```{r eval=require('flextable'), echo=FALSE}
+flextable(as.data.frame(reportS$data))
+```
 
 ```{r comment='#'}
 # a boring regression
@@ -106,5 +101,31 @@ DT::datatable(
   fillContainer = FALSE, options = list(pageLength = 8)
 )
 ```
+
+---
+Apartado1 vs 2
+
+.pull-left[
+
+## Column 1
+
+- First Bullet
+```{r eval=require('flextable'), echo=FALSE}
+flextable(as.data.frame(iris))
+```
+]
+
+.pull-right[
+
+## Column 2
+
+- First Comparison
+```{r eval=require('DT'), tidy=FALSE}
+DT::datatable(
+  head(iris, 10),
+  fillContainer = FALSE, options = list(pageLength = 8)
+)
+```
+]
 
    
