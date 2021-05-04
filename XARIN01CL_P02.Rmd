@@ -3,10 +3,10 @@ title: "Marc Presentación"
 subtitle: "Data Analyst Day..."
 author: "Marc25"
 params:
-  data ="aa"
-  data_train="aa"
-  g1="aaa"
-  g2="aaa"
+  data: data
+  data_train: data_train
+  g1: g1
+  g2: g2
 institute: "cestudios.alonso"
 date: "2021/05/02 (updated: `r Sys.Date()`)"
 output:
@@ -56,23 +56,21 @@ I have a problem in my bussiness ...
 # Data Source 
 
 ```{r eval=require('flextable'), echo=FALSE}
-flextable(as.data.frame(reportS$data))
-```
-
-```{r comment='#'}
-# a boring regression
-fit = lm(dist ~ 1 + speed, data = cars)
-coef(summary(fit))
+str(params$data)
+flextable(params$data[,1:7])
 ```
 
 ---
 
-# R Plots
+# R Plots Data Explorer
 
-```{r cars, fig.height=4, dev='svg'}
-par(mar = c(4, 4, 1, .1))
-plot(cars, pch = 19, col = 'darkgray', las = 1)
-abline(fit, lwd = 2)
+```{r eval=require('ggplot2'), fig.height=4, echo=TRUE}
+library(ggplot2)
+data <- as.data.frame(params$data)
+g1 <- ggplot(data, aes(loan_default, ..count.., fill=loan_default))+
+  geom_bar()+
+  labs(title = "Target proportion in Data")
+print.g1
 ```
 
 ---
