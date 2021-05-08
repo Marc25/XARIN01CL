@@ -7,6 +7,7 @@ params:
   data_train: data_train
   g1: g1
   g2: g2
+  model1: model1
 institute: "cestudios.alonso"
 date: "2021/05/02 (updated: `r Sys.Date()`)"
 output:
@@ -18,9 +19,9 @@ output:
       countIncrementalSlides: false
 ---
 
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+# background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
 options(htmltools.dir.version = FALSE)
 ```
 
@@ -64,15 +65,29 @@ flextable(params$data[,1:7])
 
 # R Plots Data Explorer
 
-```{r eval=require('ggplot2'), fig.height=4, echo=TRUE}
+```{r eval=require('ggplot2'), fig.height=4, echo=TRUE , fig.}
 library(ggplot2)
 data <- as.data.frame(params$data)
 g1 <- ggplot(data, aes(loan_default, ..count.., fill=loan_default))+
   geom_bar()+
   labs(title = "Target proportion in Data")
-print.g1
+g1
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, out.width = '200px'}
+library(cowplot)
+ggplot(data = data.frame(x = c(-3, 3)), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 1, sd = 1)) + 
+  stat_function(fun = dnorm, n = 101, args = list(mean = -1, sd = 1)) + 
+  geom_vline(xintercept = 0, colour="black", linetype = "solid") +
+  geom_vline(xintercept = c(-1.5,1.5), colour="black", linetype = "longdash") +
+  ylab("Density") + xlab("\'Internal Signal\'") +
+  scale_y_continuous(breaks = NULL)
+```
+---
+# Model training
+`r print(params$model1)`
+---
 ---
 
 # Tables
