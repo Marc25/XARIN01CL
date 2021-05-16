@@ -9,3 +9,5 @@ source("DMODEX01_LOANS.R")
 pathf <- ("/cloud/project/")
 rmarkdown::render(input = paste0(pathf,'XARIN01CL_P02.Rmd'),
                   params = reportS)
+
+

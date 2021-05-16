@@ -2,14 +2,15 @@
 title: "Marc Presentación"
 subtitle: "Data Analyst Day..."
 author: "Marc25"
+date: "20210502 (Updated `r Sys.Date()`)"
 params:
   data: data
   data_train: data_train
   g1: g1
   g2: g2
   model1: model1
+  model1_predc: model1_predc
 institute: "cestudios.alonso"
-date: "2021/05/02 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -17,12 +18,21 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+  toc: true
 ---
 
 # background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
 
 ```{r setup, include=TRUE}
-options(htmltools.dir.version = FALSE)
+# options(htmltools.dir.version = FALSE)
+```
+```{r}
+knitr::opts_chunk$set(
+  #fig.showtext = TRUE,
+  fig.width = 16, 
+  fig.height = 8, 
+  dpi = 300
+)
 ```
 
 ???
@@ -45,7 +55,6 @@ class: inverse, center, middle
 
 # Good Morning Data 
 I have a problem in my bussiness ...
-
 --
 
 
@@ -53,7 +62,10 @@ I have a problem in my bussiness ...
 
 # Example 01 : Loans predict default (Yes o No)
 ---
-
+Who incurred loans default, 
+here as Dataset...
+**loans Default Dataset**
+[FAD](https://github.com/Marc25/XARIN01CL/tree/master/data/loans_df.rds)
 # Data Source 
 
 ```{r eval=require('flextable'), echo=FALSE}
@@ -65,7 +77,7 @@ flextable(params$data[,1:7])
 
 # R Plots Data Explorer
 
-```{r eval=require('ggplot2'), fig.height=4, echo=TRUE , fig.}
+```{r g1t, echo = FALSE, message = F, warning = F, fig.align = 'center', out.width = '700px', out.height = '450px', dev='png'}
 library(ggplot2)
 data <- as.data.frame(params$data)
 g1 <- ggplot(data, aes(loan_default, ..count.., fill=loan_default))+
@@ -73,21 +85,40 @@ g1 <- ggplot(data, aes(loan_default, ..count.., fill=loan_default))+
   labs(title = "Target proportion in Data")
 g1
 ```
+```{r, echo = FALSE, out.height="50%", fig.height=1, out.width="50%", fig.align='center'}
+knitr::include_graphics("/cloud/project/XARIN01CL_P02_files/figure-html/g1t-1.png")
+#knitr::include_graphics("libs/img/g1-1.png")
+```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, out.width = '200px'}
+
+```{r gg, echo=FALSE, message=FALSE, warning=FALSE, out.width = '200px'}
 library(cowplot)
-ggplot(data = data.frame(x = c(-3, 3)), aes(x)) +
+g3 <- ggplot(data = data.frame(x = c(-3, 3)), aes(x)) +
   stat_function(fun = dnorm, n = 101, args = list(mean = 1, sd = 1)) + 
   stat_function(fun = dnorm, n = 101, args = list(mean = -1, sd = 1)) + 
   geom_vline(xintercept = 0, colour="black", linetype = "solid") +
   geom_vline(xintercept = c(-1.5,1.5), colour="black", linetype = "longdash") +
   ylab("Density") + xlab("\'Internal Signal\'") +
   scale_y_continuous(breaks = NULL)
+g3
 ```
 ---
-# Model training
-`r print(params$model1)`
+# Feature Engineering
+***Add transformations of var to dataset***
 ---
+# Machine Learning
+## Model training :( GLM, Gradient Boosting, Random forest)
+
+```{r mod1Summary, echo = FALSE}
+tidy(params$model1)[,1:2]
+```
+
+---
+# View Predict class in test data
+
+```{r mod1class, echo = FALSE}
+flextable(params$model1_predc)
+```
 ---
 
 # Tables
@@ -100,7 +131,7 @@ knitr::kable(head(iris), format = 'html')
 
 ---
 
-# HTML Widgets
+## Feature Importance
 
 
 ---

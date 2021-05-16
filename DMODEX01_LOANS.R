@@ -38,9 +38,30 @@ logistic_fit <- logistic_model %>%
 # Print model fit object
 # print(logistic_fit)
 
+# Predict outcome categories
+class_preds <- predict(logistic_fit, new_data = loan_test,
+                       type = 'class')
 
-reportS <- list(data = loan_df , 
+# Obtain estimated probabilities for each outcome value
+prob_preds <- predict(logistic_fit, new_data = loan_test, 
+                      type = 'prob')
+
+class_preds <- loan_test %>% 
+     select(loan_default) %>% 
+     bind_cols(class_preds, prob_preds)
+  
+# Combine test set results
+# telecom_results <- telecom_test %>% 
+#   select(canceled_service) %>% 
+#   bind_cols(class_preds, prob_preds)
+# # View results tibble
+# telecom_results
+
+
+
+reportS <- list(data = as.data.frame(loan_df) , 
                 data_train = loan_training, 
                 model1 = logistic_fit, 
+                model1_predc = class_preds,
                 g1 = g1, 
                 g2 = g2)
